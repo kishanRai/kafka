@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaMessagePublisher {
 
-	private final KafkaTemplate<String, String> kafkaTemplate;
+	private final KafkaTemplate<String, Object> kafkaTemplate;
 
-	public KafkaMessagePublisher( KafkaTemplate<String, String> kafkaTemplate ) {
+	public KafkaMessagePublisher( KafkaTemplate<String, Object> kafkaTemplate ) {
 		this.kafkaTemplate = kafkaTemplate;
 	}
 
 	public void publishMessage( String message ) {
-		CompletableFuture<SendResult<String, String>> l_future = kafkaTemplate.send( "t1-kishan", message );
+		CompletableFuture<SendResult<String, Object>> l_future = kafkaTemplate.send( "tnew-bulk-message", message );
+		// Sending bulk messages to the topic "tnew-bulk-message"
+		for ( int count = 0; count < 10000; count++ ) {
+			l_future = kafkaTemplate.send( "tnew-bulk-message", message + " : " + count );
+		}
+
 		l_future.whenComplete( ( result, exception ) -> {
 			if ( exception != null ) {
 				System.out.println( "Error publishing message: " + exception.getMessage() );
