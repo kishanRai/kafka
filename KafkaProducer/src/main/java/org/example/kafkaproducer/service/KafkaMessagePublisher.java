@@ -9,16 +9,20 @@ import org.springframework.stereotype.Service;
 public class KafkaMessagePublisher {
 
 	private final KafkaTemplate<String, Object> kafkaTemplate;
+	private final String currentTopic = "tprogramatically-bulk-message";
 
 	public KafkaMessagePublisher( KafkaTemplate<String, Object> kafkaTemplate ) {
 		this.kafkaTemplate = kafkaTemplate;
 	}
 
 	public void publishMessage( String message ) {
-		CompletableFuture<SendResult<String, Object>> l_future = kafkaTemplate.send( "tnew-bulk-message", message );
-		// Sending bulk messages to the topic "tnew-bulk-message"
+
+		// Sending a single message to the topic currentTopic
+		CompletableFuture<SendResult<String, Object>> l_future = kafkaTemplate.send( currentTopic, message );
+
+		// Sending bulk messages to the topic currentTopic
 		for ( int count = 0; count < 10000; count++ ) {
-			l_future = kafkaTemplate.send( "tnew-bulk-message", message + " : " + count );
+			l_future = kafkaTemplate.send( currentTopic, message + " : " + count );
 		}
 
 		l_future.whenComplete( ( result, exception ) -> {
