@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class KafkaMessagePublisher {
 
 	private final KafkaTemplate<String, Object> kafkaTemplate;
-	private final String currentTopic = "tprogramatically-bulk-message";
+	private final String currentTopic = "tprogramatically-bulk-message-2";
 
 	public KafkaMessagePublisher( KafkaTemplate<String, Object> kafkaTemplate ) {
 		this.kafkaTemplate = kafkaTemplate;
