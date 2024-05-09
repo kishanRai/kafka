@@ -1,4 +1,4 @@
-package org.example.kafkaconsumerdeserializer.dto;
+package org.example.kafkaproducerserializer.dto;
 
 import lombok.Data;
 
