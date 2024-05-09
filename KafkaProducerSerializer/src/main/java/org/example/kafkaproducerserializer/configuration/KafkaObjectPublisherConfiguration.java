@@ -9,7 +9,7 @@ public class KafkaObjectPublisherConfiguration {
 
 	@Bean
 	public NewTopic createTopic() {
-		return new NewTopic( "tprogramatically-bulk-object-1", 4, (short) 1 );
+		return new NewTopic( "tprogramatically-bulk-object-2", 4, (short) 1 );
 	}
 
 }
